@@ -15,10 +15,10 @@ public class User {
     String name;
     String email;
      //address_add_id
-     @OneToOne(cascade = CascadeType.ALL)
+    /* @OneToOne(cascade = CascadeType.ALL)
      @JoinColumn(name = "address_id")
-     private Address address;
+     private Address address;*/
 
-    /* @OneToMany
-     private List<Address> addressList = new ArrayList<>();*/
+     /*@OneToMany(mappedBy = "user")
+      List<Product> productList = new ArrayList<>();*/
 }
