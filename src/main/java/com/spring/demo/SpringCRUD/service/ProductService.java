@@ -36,7 +36,7 @@ public class ProductService {
 */
         // productList.add(product1);
         //productList.add(product2);
-        Customer customer = new Customer();
+        /*Customer customer = new Customer();
         customer.setName("vaibhav");
         customer.setCity("noida");
         customerRepo.save(customer);
@@ -53,16 +53,30 @@ public class ProductService {
 
         List<Product> productList=new ArrayList<>();
         productList.add(product1);
-        productList.add(product2);
+        productList.add(product2);*/
 
+        return productRepo.save(product);
+    }
 
-       
+    public void addCustomerToProduct(Long productId, Long customerId) {
 
+        Optional<Product> product1 =productRepo.findById(productId);
+        Optional<Customer> customer1 = customerRepo.findById(customerId);
 
+        if(product1.isPresent()&& customer1.isPresent())
+        {
+            Product product =product1.get();
+            Customer customer =customer1.get();
 
+            product.getCustomers().add(customer);
+            customer.getProducts().add(product);
 
+//            productRepo.save(product);
+            customerRepo.save(customer);
+        }
+        else {
 
-
-        return productRepo.save(product1);
+            throw new IllegalArgumentException("pro or cus not found");
+        }
     }
 }
