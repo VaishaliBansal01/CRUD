@@ -11,5 +11,5 @@ import java.util.Set;
 public interface CustomerRepo extends JpaRepository<Customer, Long> {
 
 
-    Set<Product> findProductsByCustomerId(@Param("customerId")Long customer_Id);
+   // Set<Product> findProductsByCustomerId(@Param("customerId")Long customer_Id);
 }

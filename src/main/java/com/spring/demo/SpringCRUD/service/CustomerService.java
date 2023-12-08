@@ -1,14 +1,21 @@
 package com.spring.demo.SpringCRUD.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.spring.demo.SpringCRUD.dto.CustomerDTO;
+//import com.spring.demo.SpringCRUD.dto.ProductDTO;
 import com.spring.demo.SpringCRUD.entity.Customer;
 import com.spring.demo.SpringCRUD.entity.Product;
 import com.spring.demo.SpringCRUD.repo.CustomerRepo;
 import com.spring.demo.SpringCRUD.repo.ProductRepo;
+
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
@@ -54,7 +61,7 @@ public class CustomerService {
         //customer1.setProductList(productList);
 
     }
-
+@Transactional
     public Customer customerProduct(Long customerId, Long productId)
     {
         Optional<Customer> customer = customerRepo.findById(customerId);
@@ -65,9 +72,11 @@ public class CustomerService {
             Product product1 = product.get();
 
             customer1.getProducts().add(product1);
-//            product1.getCustomers().add(customer1);
-
+//
+//        product1.getCustomers().add(customer1);
 //           productRepo.save(product1);
+
+//        productRepo.save(product1);
         return customerRepo.save(customer1);
 
 
@@ -76,14 +85,54 @@ public class CustomerService {
             throw new IllegalArgumentException("not found");
         }*/
     }
+    @JsonIgnore
+    @Transactional
+    public Customer getCustomerById(Long id) {
+/*
+        Customer customer = customerRepo.findById(id).get();
+        return customer;*/
 
+        Customer customer = customerRepo.findById(id).get();
+//        Set<Product> products =customer.get().getProducts();
 
-    public Set<Product> getProductsByCustomerId(Long customer_Id) {
-        return customerRepo.findProductsByCustomerId(customer_Id);
+      if (customer!=null) {
+         Hibernate.initialize(customer.getProducts());
+      }
+        return customer;
     }
 
 
-
-
+   /* public Set<Product> getProductsByCustomerId(Long customer_Id) {
+        return customerRepo.findProductsByCustomerId(customer_Id);
+    }*/
     //}
+
+   /* @Transactional
+    public CustomerDTO getCustomerWithProductsById(Long customerId) {
+        Customer customer = customerRepo.findById(customerId).orElse(null);
+
+        if (customer != null) {
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.setId(customer.getId());
+            customerDTO.setName(customer.getName());
+            customerDTO.setCity(customer.getCity());
+
+            Set<ProductDTO> productDTOs = customer.getProducts().stream()
+                    .map(this::convertToProductDTO)
+                    .collect(Collectors.toSet());
+
+            customerDTO.setProducts(productDTOs);
+            return customerDTO;
+        } else {
+            return null; // or throw an exception
+        }
+    }
+
+    private ProductDTO convertToProductDTO(Product product) {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(product.getId());
+        productDTO.setProductName(product.getProductName());
+        productDTO.setBrand(product.getBrand());
+        return productDTO;
+    }*/
 }
