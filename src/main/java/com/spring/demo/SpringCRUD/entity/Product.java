@@ -2,11 +2,15 @@ package com.spring.demo.SpringCRUD.entity;
 
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Product  {
     @Id
@@ -19,10 +23,11 @@ public class Product  {
     Customer customer;*/
     /*@OneToMany
     Customer customer;*/
-    @ManyToMany(mappedBy = "products", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 
-//    @JsonIgnoreProperties("products")
-    @JsonBackReference
-    @JsonIgnore
-    Set<Customer> customers = new HashSet<>();
+//  @JsonIgnoreProperties("products")
+   // @JsonBackReference
+    @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
+    //@JsonIgnore
+        @JsonBackReference
+    Set<Customer> customers ;
 }

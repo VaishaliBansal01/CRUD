@@ -2,7 +2,9 @@ package com.spring.demo.SpringCRUD.controller;
 
 //import com.spring.demo.SpringCRUD.dto.CustomerDTO;
 import com.spring.demo.SpringCRUD.entity.Customer;
+import com.spring.demo.SpringCRUD.entity.Product;
 import com.spring.demo.SpringCRUD.repo.CustomerRepo;
+import com.spring.demo.SpringCRUD.repo.ProductRepo;
 import com.spring.demo.SpringCRUD.service.CustomerService;
 import com.spring.demo.SpringCRUD.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/customer/product")
 public class CustomerController {
     @Autowired
     CustomerService customerService;
@@ -20,6 +24,13 @@ public class CustomerController {
     ProductService productService;
     @Autowired
     CustomerRepo customerRepo;
+    @Autowired
+    ProductRepo productRepo;
+
+
+
+
+
     @PostMapping("/customer")
     public Customer createCustomer(@RequestBody Customer customer)
     {
@@ -38,7 +49,7 @@ public class CustomerController {
         }
     }*/
     @PostMapping("/customer_product")
-    public Customer customerProduct(@RequestParam Long customer_id, @RequestParam Long product_id)
+    public Product customerProduct(@RequestParam Long customer_id, @RequestParam Long product_id)
     {
         return customerService.customerProduct(customer_id, product_id);
     }
@@ -65,6 +76,27 @@ public class CustomerController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }*/
+    @PostMapping("/cus")
+    public  Customer saveCustomerWithProduct(@RequestBody Customer customer)
+    {
+      return customerRepo.save(customer);
+    }
+    @GetMapping("/get-cus")
+    public List<Customer> findAllCustomers()
+    {
+        return customerRepo.findAll();
+    }
+    @GetMapping("/{id}")
+    public  Customer findCustomer(@PathVariable Long id)
+    {
+        return customerRepo.findById(id).orElse(null);
+    }
+
+   /* @GetMapping("/find/{city}")
+    public List<Customer> findCustomersByCity(String city)
+    {
+        return customerRepo.findCustomerByCity(city);
     }*/
 
 

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,12 +25,10 @@ public class CustomerService {
     @Autowired
     ProductRepo productRepo;
 
+
+
     public Customer createCustomer(Customer customer) {
-
-
-
-
-//           Optional<Customer> customer1= customerRepo.findById(customer.getId());
+        //           Optional<Customer> customer1= customerRepo.findById(customer.getId());
 //
 //           Optional<Product> product1 = productRepo.findById(customer.getId());
 //           Optional<Product> product2 = productRepo.findById(customer.getId());
@@ -62,7 +61,7 @@ public class CustomerService {
 
     }
 @Transactional
-    public Customer customerProduct(Long customerId, Long productId)
+    public Product customerProduct(Long customerId, Long productId)
     {
         Optional<Customer> customer = customerRepo.findById(customerId);
         Optional<Product> product = productRepo.findById(productId);
@@ -72,12 +71,13 @@ public class CustomerService {
             Product product1 = product.get();
 
             customer1.getProducts().add(product1);
+            customerRepo.save(customer1);
 //
-//        product1.getCustomers().add(customer1);
+        product1.getCustomers().add(customer1);
 //           productRepo.save(product1);
 
 //        productRepo.save(product1);
-        return customerRepo.save(customer1);
+        return productRepo.save(product1);
 
 
 
@@ -91,14 +91,18 @@ public class CustomerService {
 /*
         Customer customer = customerRepo.findById(id).get();
         return customer;*/
+        Set<Product> products = new HashSet<>();
 
-        Customer customer = customerRepo.findById(id).get();
+        //Customer customer = customerRepo.findById(id).get();
+
+       return customerRepo.findById(id).get();
 //        Set<Product> products =customer.get().getProducts();
 
-      if (customer!=null) {
-         Hibernate.initialize(customer.getProducts());
+        /*if (customer!=null) {
+          Hibernate.initialize(customer.getProducts());
+          products= customer.getProducts();
       }
-        return customer;
+        return customer;*/
     }
 
 

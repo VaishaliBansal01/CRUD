@@ -6,10 +6,12 @@ import com.spring.demo.SpringCRUD.repo.CustomerRepo;
 import com.spring.demo.SpringCRUD.repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
@@ -78,5 +80,15 @@ public class ProductService {
 
             throw new IllegalArgumentException("pro or cus not found");
         }
+    }
+    @Transactional(readOnly = true)
+    public Product getProductById(Long id) {
+
+       return productRepo.findById(id).get();
+
+    }
+
+    public Product getProductByIdWithCustomers(Long id) {
+        return productRepo.findById(id).get();
     }
 }
