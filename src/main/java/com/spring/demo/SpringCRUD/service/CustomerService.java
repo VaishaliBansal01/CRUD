@@ -75,8 +75,6 @@ public class CustomerService {
 //
         product1.getCustomers().add(customer1);
 //           productRepo.save(product1);
-
-//        productRepo.save(product1);
         return productRepo.save(product1);
 
 

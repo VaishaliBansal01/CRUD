@@ -88,7 +88,8 @@ public class ProductService {
 
     }
 
-    public Product getProductByIdWithCustomers(Long id) {
-        return productRepo.findById(id).get();
+    public Set<Customer> getProductByIdWithCustomers(Long id) {
+        System.out.println("service");
+        return productRepo.findByIdWithCustomers(id);
     }
 }

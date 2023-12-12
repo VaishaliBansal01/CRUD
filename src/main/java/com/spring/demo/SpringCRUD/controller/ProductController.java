@@ -1,5 +1,6 @@
 package com.spring.demo.SpringCRUD.controller;
 
+import com.spring.demo.SpringCRUD.entity.Customer;
 import com.spring.demo.SpringCRUD.entity.Product;
 import com.spring.demo.SpringCRUD.repo.CustomerRepo;
 import com.spring.demo.SpringCRUD.repo.ProductRepo;
@@ -7,6 +8,9 @@ import com.spring.demo.SpringCRUD.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/product/customer")
@@ -29,8 +33,9 @@ public class ProductController {
         return productService.createProduct(product);
     }
     @GetMapping("/product/{id}")
-    public Product getProductById(@PathVariable Long id)
+    public Set<Customer> getProductById(@PathVariable Long id)
     {
+        System.out.println("product controller");
         return productService.getProductByIdWithCustomers(id);
     }
 
