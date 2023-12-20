@@ -36,7 +36,8 @@ public class ProductController {
     public Set<Customer> getProductById(@PathVariable Long id)
     {
         System.out.println("product controller");
-        return productService.getProductByIdWithCustomers(id);
+        return productService.
+                getProductByIdWithCustomers(id);
     }
 
 
